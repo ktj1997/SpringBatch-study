@@ -5,5 +5,9 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: ${DB_PASSWORD}
+
   batch:
-    initialize-schema: never
+    initialize-schema: always
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

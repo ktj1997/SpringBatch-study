@@ -69,12 +69,36 @@ Spring Batch에 대해서 공부하고 정리하는 레포
  ```
  Step이 실행되는 동안 필요한 데이터 또는 실행된 결과 저장 
 
- ExecutionContext 클래스와 매핑
+ StepExecution 클래스와 매핑
 ```
  
  ## 6. BATCH_STEP_EXECUTION_CONTEXT
  ```
  Step이 실행되는 동안 공유해야 할 데이터를 직렬화 해 저장 (Step끼리 공유x, Step끼리 공유하려면, BATCH_JOB_EXECUTION_CONTEXT)
  
- StepExecution 테이블과 매핑
+ ExecutionContext 테이블과 매핑
  ```
+
+# Chunk와 Tasklet의 차이
+
+## Chunk
+```
+  ItemReader, ItemProcessor, ItemWriter를 통해서 페이징 된 데이터를 처리한다.
+  대량처리를 하는경우 Tasklet보다 쉽게 처리 가능
+```
+### ItemReader < I >
+```
+   데이터를 읽어오는 Stream의 역할
+   다양한 구현체가 있다.(List,JDBC,JPA,KAFKA,HIBERNATE,FILE ...)
+```
+
+### ItemProcessor <I,O>
+```
+   데이터를 가공하는 역할. I --> O
+   원본 데이터를 가공해서 Writer에 넘겨 줄수도있고, 넘겨주지 않을 수도 있다.
+```
+
+### ItemWriter < O >
+```
+   N(N<=chunkSize) 만큼의 크기로 나뉘어진 Processor를 거친 데이터들인 List<O>를 받는다.
+```

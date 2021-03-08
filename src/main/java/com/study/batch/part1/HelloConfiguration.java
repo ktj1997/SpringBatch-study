@@ -30,6 +30,7 @@ public class HelloConfiguration {
         return jobBuilderFactory.get("helloJob")
                 /**
                  *  Job이 실행 할때마다 ParameterId 자동생성
+                 *  Auto_increment라고 보면될듯
                  */
                 .incrementer(new RunIdIncrementer())
                 /**
