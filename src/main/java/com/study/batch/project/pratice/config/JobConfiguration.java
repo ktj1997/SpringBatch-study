@@ -1,9 +1,7 @@
 package com.study.batch.project.pratice.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.study.batch.project.pratice.model.Example;
 import com.study.batch.project.pratice.service.RedisService;
-import com.study.batch.project.pratice.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -19,10 +17,7 @@ import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Configuration
@@ -76,6 +71,6 @@ public class JobConfiguration {
     }
 
     private List<String> getItems() {
-        return List.of("000020", "000050", "003480", "000950", "004250", "001680");
+        return List.of("243880", "243890", "364980", "305720", "304780");
     }
 }

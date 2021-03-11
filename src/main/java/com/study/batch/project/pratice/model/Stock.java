@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StockInfo {
+public class Stock {
 
     /**
      * 종목 이름

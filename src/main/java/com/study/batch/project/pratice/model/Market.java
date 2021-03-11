@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JisuInfo {
+public class Market {
     /**
      * 코스닥 지수
      */

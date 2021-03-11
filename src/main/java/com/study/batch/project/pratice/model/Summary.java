@@ -1,15 +1,18 @@
 package com.study.batch.project.pratice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StockPrice {
+public class Summary {
+    private String queryTime;
 
-    private StockInfo Tbl_StockInfo;
+    private Stock Tbl_StockInfo;
 
-    private JisuInfo stockInfo;
+    private Market stockInfo;
 }

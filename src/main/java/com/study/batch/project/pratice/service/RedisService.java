@@ -1,14 +1,14 @@
 package com.study.batch.project.pratice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.study.batch.project.pratice.model.Info;
+import com.study.batch.project.pratice.model.Summary;
 
 import java.util.List;
 
 public interface RedisService {
     List<String> getInfos();
 
-    List<String> getInfo(String id);
+    List<Summary> getInfo(String id);
 
-    List<String> insertInfo(String code) throws JsonProcessingException;
+    List<Summary> insertInfo(String code) throws JsonProcessingException;
 }

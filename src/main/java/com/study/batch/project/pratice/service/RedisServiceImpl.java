@@ -1,7 +1,8 @@
 package com.study.batch.project.pratice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.study.batch.project.pratice.model.Info;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.batch.project.pratice.model.Summary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +18,7 @@ public class RedisServiceImpl implements RedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
     private final StockAPIService stockAPIService;
+    private final ObjectMapper objectMapper;
 
     @Override
     public List<String> getInfos() {
@@ -23,15 +26,29 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public List<String> getInfo(String id) {
+    public List<Summary> getInfo(String id) {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
-        return listOperations.range(String.valueOf(id), 0, -1);
+        return listOperations.range(String.valueOf(id), 0, -1).stream().map(it -> {
+            try {
+                return objectMapper.readValue(it,Summary.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public List<String> insertInfo(String code) throws JsonProcessingException {
+    public List<Summary> insertInfo(String code) throws JsonProcessingException {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
         listOperations.rightPush(code, stockAPIService.requestApi(code));
-        return listOperations.range(code, 0, -1);
+        return listOperations.range(code, 0, -1).stream().map(it -> {
+            try {
+                return objectMapper.readValue(it,Summary.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 }
