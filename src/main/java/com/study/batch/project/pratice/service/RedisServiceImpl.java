@@ -1,6 +1,7 @@
-package com.study.batch.pratice.service;
+package com.study.batch.project.pratice.service;
 
-import com.study.batch.pratice.model.Info;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.study.batch.project.pratice.model.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -14,6 +15,7 @@ import java.util.List;
 public class RedisServiceImpl implements RedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final StockAPIService stockAPIService;
 
     @Override
     public List<String> getInfos() {
@@ -21,15 +23,15 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Info getInfo(Long id) {
+    public List<String> getInfo(String id) {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
-        return new Info(id,listOperations.range(String.valueOf(id), 0, -1));
+        return listOperations.range(String.valueOf(id), 0, -1);
     }
 
     @Override
-    public Info insertInfo(Long id, String value) {
+    public List<String> insertInfo(String code) throws JsonProcessingException {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
-        listOperations.rightPush(String.valueOf(id), value);
-        return new Info(id,listOperations.range(String.valueOf(id), 0, -1));
+        listOperations.rightPush(code, stockAPIService.requestApi(code));
+        return listOperations.range(code, 0, -1);
     }
 }

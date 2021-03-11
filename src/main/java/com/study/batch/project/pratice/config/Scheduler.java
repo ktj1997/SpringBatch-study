@@ -1,4 +1,4 @@
-package com.study.batch.pratice.config;
+package com.study.batch.project.pratice.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.JobParameter;
@@ -22,7 +22,7 @@ public class Scheduler {
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
 
-    @Scheduled(cron = "0 0/1 9-15 * * MON-FRI")
+    @Scheduled(cron = "0 0/1 * * * MON-FRI")
     public void scheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         long start = System.currentTimeMillis();
         System.out.println("CronJob start");

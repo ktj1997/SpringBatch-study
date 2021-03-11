@@ -1,4 +1,4 @@
-package com.study.batch.pratice.util;
+package com.study.batch.project.pratice.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

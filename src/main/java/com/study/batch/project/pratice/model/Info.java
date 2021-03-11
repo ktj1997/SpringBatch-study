@@ -1,4 +1,4 @@
-package com.study.batch.pratice.model;
+package com.study.batch.project.pratice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

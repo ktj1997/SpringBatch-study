@@ -1,8 +1,9 @@
-package com.study.batch.pratice.config;
+package com.study.batch.project.pratice.config;
 
-import com.study.batch.pratice.model.Example;
-import com.study.batch.pratice.service.RedisService;
-import com.study.batch.pratice.util.DateUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.study.batch.project.pratice.model.Example;
+import com.study.batch.project.pratice.service.RedisService;
+import com.study.batch.project.pratice.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -43,7 +44,7 @@ public class JobConfiguration {
     @JobScope
     public Step sequenceStep() {
         return stepBuilderFactory.get("record")
-                .<Example, Example>chunk(chunkSize)
+                .<String, String>chunk(chunkSize)
                 .reader(itemReader())
                 .processor(itemProcessor())
                 .writer(itemWriter())
@@ -52,32 +53,29 @@ public class JobConfiguration {
 
     @Bean
     @StepScope
-    public ItemReader<Example> itemReader() {
+    public ItemReader<String> itemReader() {
         return new ListItemReader<>(getItems());
     }
 
     @Bean
     @StepScope
-    public ItemProcessor<Example, Example> itemProcessor() {
-        return item -> {
-            item.setValue(DateUtil.parseToString(new Date()) + ";" + item.getValue());
-            return item;
-        };
+    public ItemProcessor<String, String> itemProcessor() {
+        return item -> item;
     }
 
     @Bean
     @StepScope
-    public ItemWriter<Example> itemWriter() {
+    public ItemWriter<String> itemWriter() {
         return items -> items.forEach(it -> {
-            redisService.insertInfo(it.getId(), it.getValue());
+            try {
+                redisService.insertInfo(it);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private List<Example> getItems() {
-        List<Example> list = new ArrayList<>();
-        for (int i = 1; i <= 2000; i++) {
-            list.add(new Example((long) i, UUID.randomUUID().toString()));
-        }
-        return list;
+    private List<String> getItems() {
+        return List.of("000020", "000050", "003480", "000950", "004250", "001680");
     }
 }

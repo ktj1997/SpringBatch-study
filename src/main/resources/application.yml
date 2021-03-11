@@ -1,4 +1,7 @@
 spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   batch:
     job:
       names: ${job.name:NONE}
@@ -17,5 +20,7 @@ spring:
         min-idle: 2
     port: 6379
     host: localhost
-
+stock:
+  api:
+    host: http://asp1.krx.co.kr/servlet/krx.asp.XMLSise
 
