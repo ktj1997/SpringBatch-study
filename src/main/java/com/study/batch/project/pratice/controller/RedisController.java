@@ -3,7 +3,7 @@ package com.study.batch.project.pratice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.study.batch.project.pratice.model.Response;
-import com.study.batch.project.pratice.service.RedisService;
+import com.study.batch.project.pratice.service.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +25,7 @@ public class RedisController {
 
     @GetMapping(value = "/infos/{id}",produces ={MediaType.APPLICATION_JSON_VALUE} )
     @ResponseStatus(HttpStatus.OK)
-    public Response getInfo(@PathVariable String id) {
+    public Response getInfo(@PathVariable String id) throws JsonProcessingException {
         return new Response(HttpStatus.OK.value(), redisService.getInfo(id));
     }
 

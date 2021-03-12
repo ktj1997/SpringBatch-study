@@ -1,7 +1,7 @@
 package com.study.batch.project.pratice.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.study.batch.project.pratice.service.RedisService;
+import com.study.batch.project.pratice.service.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

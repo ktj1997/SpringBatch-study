@@ -1,4 +1,4 @@
-package com.study.batch.project.pratice.service;
+package com.study.batch.project.pratice.service.stock;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

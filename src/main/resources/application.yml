@@ -22,5 +22,5 @@ spring:
     host: localhost
 stock:
   api:
-    host: http://asp1.krx.co.kr/servlet/krx.asp.XMLSise
+    host: http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=
 

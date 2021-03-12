@@ -1,4 +1,4 @@
-package com.study.batch.project.pratice.service;
+package com.study.batch.project.pratice.service.stock;
 
 ;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +24,7 @@ public class StockAPiServiceImpl implements StockAPIService {
 
     @Override
     public String requestApi(String code) throws JsonProcessingException {
-        String str = restTemplate.getForObject(host + "?code=" + code, String.class).trim();
+        String str = restTemplate.getForObject(host + code, String.class).trim();
         Summary summary = xmlMapper.readValue(str, Summary.class);
         String json = objectMapper.writeValueAsString(summary);
         return json;

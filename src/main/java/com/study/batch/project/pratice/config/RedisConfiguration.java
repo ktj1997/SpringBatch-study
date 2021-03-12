@@ -57,5 +57,4 @@ public class RedisConfiguration {
 
         return stringRedisTemplate;
     }
-
 }

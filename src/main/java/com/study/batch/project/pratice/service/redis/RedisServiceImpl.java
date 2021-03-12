@@ -1,8 +1,10 @@
-package com.study.batch.project.pratice.service;
+package com.study.batch.project.pratice.service.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.batch.project.pratice.model.Summary;
+import com.study.batch.project.pratice.service.stock.StockAPIService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,14 +30,15 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public List<Summary> getInfo(String id) {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
-        return listOperations.range(String.valueOf(id), 0, -1).stream().map(it -> {
+        List<Summary> infos = listOperations.range(String.valueOf(id), 0, -1).stream().map(it -> {
             try {
-                return objectMapper.readValue(it,Summary.class);
+                return objectMapper.readValue(it, Summary.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
             return null;
         }).collect(Collectors.toList());
+        return infos;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class RedisServiceImpl implements RedisService {
         listOperations.rightPush(code, stockAPIService.requestApi(code));
         return listOperations.range(code, 0, -1).stream().map(it -> {
             try {
-                return objectMapper.readValue(it,Summary.class);
+                return objectMapper.readValue(it, Summary.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
